@@ -89,7 +89,7 @@ hr {
 
 /* -------- Upload box fix -------- */
 [data-testid="stFileUploader"] section {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #6c6d70 !important;
     border: 2px dashed #FFD700;
     border-radius: 12px;
     padding: 25px;
@@ -100,7 +100,7 @@ hr {
     font-weight: bold;
 }
 [data-testid="stFileUploader"] span {
-    color: #6c6d70 !important;
+    color: #FFFFFF !important;
 }
 </style>
 """, unsafe_allow_html=True)
