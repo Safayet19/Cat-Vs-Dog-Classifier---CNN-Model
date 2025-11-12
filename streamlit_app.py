@@ -65,12 +65,13 @@ st.markdown("""
     margin-bottom: 40px;
 }
 .prediction {
-    font-size: 65px;
-    font-weight: bold;
+    font-size: 85px;          /* ⬆️ Increased for visibility */
+    font-weight: 900;
     text-align: center;
     margin-top: 15px;
     text-shadow: 0px 0px 25px rgba(255,255,255,0.3);
 }
+
 .confidence {
     font-size: 26px;
     text-align: center;
@@ -152,11 +153,11 @@ if uploaded_files:
 
         pred = model.predict(img_array)[0][0]
         if pred > 0.5:
-            label = "🐶 This is a DOG 🐶"
+            label = "🐶 DOG 🐶"
             color = "#1E90FF"
             confidence = pred * 100
         else:
-            label = "🐱 This is a CAT 🐱"
+            label = "🐱 CAT 🐱"
             color = "#FF69B4"
             confidence = (1-pred) * 100
 
