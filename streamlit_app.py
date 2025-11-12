@@ -32,6 +32,9 @@ import numpy as np
 import gdown
 import os
 
+# -------------------------------
+# Page config
+# -------------------------------
 st.set_page_config(
     page_title="🐶🐱 Cat vs Dog Classifier",
     page_icon="🐾",
@@ -39,7 +42,7 @@ st.set_page_config(
 )
 
 # -------------------------------
-# Custom CSS for design
+# Custom CSS
 # -------------------------------
 st.markdown("""
 <style>
@@ -47,16 +50,17 @@ st.markdown("""
 .title { color: #FF4500; font-size: 60px; font-weight: bold; text-align: center; }
 .subtitle { color: #555555; font-size: 22px; text-align: center; margin-bottom: 30px; }
 .footer { color: gray; font-size: 14px; text-align: center; margin-top: 40px; }
-.prediction { font-size: 32px; font-weight: bold; text-align: center; margin-top: 10px; }
-.confidence { font-size: 22px; text-align: center; margin-bottom: 20px; }
+.prediction { font-size: 50px; font-weight: bold; text-align: center; margin-top: 10px; }
+.confidence { font-size: 24px; text-align: center; margin-bottom: 20px; }
+img.small-img { width: 150px; height: auto; border-radius: 10px; }
 </style>
 """, unsafe_allow_html=True)
 
 # -------------------------------
-# Title and subtitle
+# Title
 # -------------------------------
 st.markdown("<h1 class='title'>🐾 Cat vs Dog Classifier 🐾</h1>", unsafe_allow_html=True)
-st.markdown("<p class='subtitle'>Upload one or more images to see professional predictions instantly!</p>", unsafe_allow_html=True)
+st.markdown("<p class='subtitle'>Upload one or more images to see predictions instantly!</p>", unsafe_allow_html=True)
 st.markdown("---")
 
 # -------------------------------
@@ -87,7 +91,7 @@ if uploaded_files:
             color = "#6FA8DC"
 
         with cols[i]:
-            st.image(img, caption=uploaded_file.name, use_column_width=True)
+            st.image(img, caption=uploaded_file.name, use_column_width=False, output_format="auto", clamp=True)
             st.markdown(f"<p class='prediction' style='color:{color};'>This is a {label}</p>", unsafe_allow_html=True)
             st.markdown(f"<p class='confidence'>{confidence:.2f}% confidence</p>", unsafe_allow_html=True)
             st.progress(int(confidence))
