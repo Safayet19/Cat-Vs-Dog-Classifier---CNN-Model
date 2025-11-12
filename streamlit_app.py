@@ -21,10 +21,17 @@ if not os.path.exists(MODEL_PATH):
 from tensorflow.keras.models import load_model
 model = load_model(MODEL_PATH)
 
-
 # -------------------------------
 # Page config
 # -------------------------------
+import streamlit as st
+from PIL import Image
+from tensorflow.keras.models import load_model
+from tensorflow.keras.preprocessing.image import img_to_array
+import numpy as np
+import gdown
+import os
+
 st.set_page_config(
     page_title="🐶🐱 Cat vs Dog Classifier",
     page_icon="🐾",
@@ -32,22 +39,24 @@ st.set_page_config(
 )
 
 # -------------------------------
-# CSS for design
+# Custom CSS for design
 # -------------------------------
 st.markdown("""
 <style>
 .stApp { background: linear-gradient(to right, #FFF7E6, #FFE6F0); font-family: 'Arial'; }
-.title { color: #FF5733; font-size: 50px; font-weight: bold; text-align: center; }
-.footer { color: gray; font-size: 14px; text-align: center; margin-top: 20px; }
-.prediction { font-size: 25px; font-weight: bold; text-align: center; }
+.title { color: #FF4500; font-size: 60px; font-weight: bold; text-align: center; }
+.subtitle { color: #555555; font-size: 22px; text-align: center; margin-bottom: 30px; }
+.footer { color: gray; font-size: 14px; text-align: center; margin-top: 40px; }
+.prediction { font-size: 32px; font-weight: bold; text-align: center; margin-top: 10px; }
+.confidence { font-size: 22px; text-align: center; margin-bottom: 20px; }
 </style>
 """, unsafe_allow_html=True)
 
 # -------------------------------
-# Title
+# Title and subtitle
 # -------------------------------
 st.markdown("<h1 class='title'>🐾 Cat vs Dog Classifier 🐾</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align:center;'>Upload one or more images to see predictions instantly!</h3>", unsafe_allow_html=True)
+st.markdown("<p class='subtitle'>Upload one or more images to see professional predictions instantly!</p>", unsafe_allow_html=True)
 st.markdown("---")
 
 # -------------------------------
@@ -58,7 +67,7 @@ uploaded_files = st.file_uploader(
 )
 
 if uploaded_files:
-    st.write(f"Uploaded {len(uploaded_files)} image(s) ✅")
+    st.write(f"✅ Uploaded {len(uploaded_files)} image(s)")
     cols = st.columns(len(uploaded_files))
     for i, uploaded_file in enumerate(uploaded_files):
         img = Image.open(uploaded_file)
@@ -79,11 +88,12 @@ if uploaded_files:
 
         with cols[i]:
             st.image(img, caption=uploaded_file.name, use_column_width=True)
-            st.markdown(f"<p class='prediction' style='color:{color};'>{label}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p class='prediction' style='color:{color};'>This is a {label}</p>", unsafe_allow_html=True)
+            st.markdown(f"<p class='confidence'>{confidence:.2f}% confidence</p>", unsafe_allow_html=True)
             st.progress(int(confidence))
 
 # -------------------------------
 # Footer
 # -------------------------------
 st.markdown("<hr>", unsafe_allow_html=True)
-st.markdown("<p class='footer'>© 2025 Safayet Ullah, Southeast University | Made with❤️ & Python 🐍 | Powered by Streamlit</p>", unsafe_allow_html=True)
+st.markdown("<p class='footer'>© 2025 Safayet Ullah, Southeast University | Made with ❤️ & Python 🐍 | Powered by Streamlit</p>", unsafe_allow_html=True)
