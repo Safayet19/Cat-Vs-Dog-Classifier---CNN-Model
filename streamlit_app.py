@@ -86,6 +86,22 @@ st.markdown("""
 hr {
     border: 1px solid #FFD700;
 }
+
+/* -------- Upload box fix -------- */
+[data-testid="stFileUploader"] section {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px dashed #FFD700;
+    border-radius: 12px;
+    padding: 25px;
+}
+[data-testid="stFileUploader"] label {
+    color: #FFD700 !important;
+    font-size: 18px;
+    font-weight: bold;
+}
+[data-testid="stFileUploader"] span {
+    color: #FFFFFF !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -114,11 +130,11 @@ if uploaded_files:
 
         pred = model.predict(img_array)[0][0]
         if pred > 0.5:
-            label = "🐶 DOG 🐶"
+            label = "🐶 This is a DOG 🐶"
             color = "#1E90FF"
             confidence = pred * 100
         else:
-            label = "🐱 CAT 🐱"
+            label = "🐱 This is a CAT 🐱"
             color = "#FF69B4"
             confidence = (1-pred) * 100
 
