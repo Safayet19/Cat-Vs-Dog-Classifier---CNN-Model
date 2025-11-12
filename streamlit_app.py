@@ -4,10 +4,17 @@ from tensorflow.keras.preprocessing.image import load_img, img_to_array
 import numpy as np
 from PIL import Image
 
-# -------------------------------
-# Load the trained model
-# -------------------------------
-model = load_model("cat_dog_model.h5")
+import gdown
+import os
+from tensorflow.keras.models import load_model
+
+MODEL_PATH = "cat_dog_model.h5"
+MODEL_URL = "https://drive.google.com/uc?id=1AcPzYlWTCWmtU_ArX4zpQnt‑GfrE1ZsC"  # your file ID
+
+if not os.path.exists(MODEL_PATH):
+    gdown.download(MODEL_URL, MODEL_PATH, quiet=False)
+
+model = load_model(MODEL_PATH)
 
 # -------------------------------
 # Page config
