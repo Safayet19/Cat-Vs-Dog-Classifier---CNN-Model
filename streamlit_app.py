@@ -94,14 +94,36 @@ hr {
     border-radius: 12px;
     padding: 25px;
 }
+
+/* Upload label text */
 [data-testid="stFileUploader"] label {
     color: #FFD700 !important;
     font-size: 18px;
     font-weight: bold;
 }
+
+/* Browse button styling */
+[data-testid="stFileUploader"] button {
+    background-color: #1E90FF !important;  /* Blue button */
+    color: black !important;               /* Black text */
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 8px 20px;
+    cursor: pointer !important;
+}
+
+/* Remove hover color change (keep only hand/pointer) */
+[data-testid="stFileUploader"] button:hover {
+    background-color: #1E90FF !important;  /* Same as normal */
+    color: black !important;
+    cursor: pointer !important;            /* Hand effect only */
+}
+
+/* Text inside uploader (filename, hints, etc.) */
 [data-testid="stFileUploader"] span {
     color: #FFFFFF !important;
 }
+
 </style>
 """, unsafe_allow_html=True)
 
