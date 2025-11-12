@@ -65,13 +65,13 @@ st.markdown("""
     margin-bottom: 40px;
 }
 .prediction {
-    font-size: 85px;          /* ⬆️ Increased for visibility */
+    font-size: 85px;
     font-weight: 900;
     text-align: center;
     margin-top: 15px;
+    color: white !important;     /* 🔥 Prediction text color white */
     text-shadow: 0px 0px 25px rgba(255,255,255,0.3);
 }
-
 .confidence {
     font-size: 26px;
     text-align: center;
@@ -105,7 +105,7 @@ hr {
 
 /* Browse button styling */
 [data-testid="stFileUploader"] button {
-    background-color: #1E90FF !important;  /* Blue button */
+    background-color: #1E90FF !important;  /* Blue */
     color: black !important;               /* Black text */
     font-weight: bold;
     border-radius: 8px;
@@ -113,18 +113,17 @@ hr {
     cursor: pointer !important;
 }
 
-/* Remove hover color change (keep only hand/pointer) */
+/* Hover only hand, no color change */
 [data-testid="stFileUploader"] button:hover {
-    background-color: #1E90FF !important;  /* Same as normal */
+    background-color: #1E90FF !important;
     color: black !important;
-    cursor: pointer !important;            /* Hand effect only */
+    cursor: pointer !important;
 }
 
-/* Text inside uploader (filename, hints, etc.) */
+/* Text inside uploader */
 [data-testid="stFileUploader"] span {
     color: #FFFFFF !important;
 }
-
 </style>
 """, unsafe_allow_html=True)
 
@@ -144,28 +143,31 @@ uploaded_files = st.file_uploader(
 
 if uploaded_files:
     st.write(f"Uploaded {len(uploaded_files)} image(s)")
-    cols = st.columns(len(uploaded_files))
-    for i, uploaded_file in enumerate(uploaded_files):
-        img = Image.open(uploaded_file)
-        img_resized = img.resize((128,128))
-        img_array = img_to_array(img_resized)/255.0
-        img_array = np.expand_dims(img_array, axis=0)
 
-        pred = model.predict(img_array)[0][0]
-        if pred > 0.5:
-            label = "🐶 DOG 🐶"
-            color = "#1E90FF"
-            confidence = pred * 100
-        else:
-            label = "🐱 CAT 🐱"
-            color = "#FF69B4"
-            confidence = (1-pred) * 100
+    # 🔥 Show 4 images per row
+    for row_start in range(0, len(uploaded_files), 4):
+        cols = st.columns(4)
+        for i, uploaded_file in enumerate(uploaded_files[row_start:row_start+4]):
+            with cols[i]:
+                img = Image.open(uploaded_file)
+                img_resized = img.resize((128,128))
+                img_array = img_to_array(img_resized)/255.0
+                img_array = np.expand_dims(img_array, axis=0)
 
-        with cols[i]:
-            st.image(img, caption=uploaded_file.name, use_column_width=True)
-            st.markdown(f"<p class='prediction' style='color:{color};'>This is a {label}</p>", unsafe_allow_html=True)
-            st.markdown(f"<p class='confidence'>Confidence: {confidence:.2f}%</p>", unsafe_allow_html=True)
-            st.progress(int(confidence))
+                pred = model.predict(img_array)[0][0]
+                if pred > 0.5:
+                    label = "🐶 DOG 🐶"
+                    color = "#1E90FF"
+                    confidence = pred * 100
+                else:
+                    label = "🐱 CAT 🐱"
+                    color = "#FF69B4"
+                    confidence = (1 - pred) * 100
+
+                st.image(img, caption=uploaded_file.name, use_column_width=True)
+                st.markdown(f"<p class='prediction'>This is a {label}</p>", unsafe_allow_html=True)
+                st.markdown(f"<p class='confidence'>Confidence: {confidence:.2f}%</p>", unsafe_allow_html=True)
+                st.progress(int(confidence))
 
 # -------------------------------
 # Footer
