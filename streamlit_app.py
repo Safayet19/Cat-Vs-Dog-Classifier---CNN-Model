@@ -6,15 +6,21 @@ from PIL import Image
 
 import gdown
 import os
-from tensorflow.keras.models import load_model
 
+# Google Drive direct download URL
+MODEL_URL = "https://drive.google.com/uc?id=1AcPzYlWTCWmtU_ArX4zpQnt-GfrE1ZsC"
+
+# Path where the model will be saved locally
 MODEL_PATH = "cat_dog_model.h5"
-MODEL_URL = "https://drive.google.com/uc?id=1AcPzYlWTCWmtU_ArX4zpQnt‑GfrE1ZsC"  # your file ID
 
+# Download the model if it doesn't exist
 if not os.path.exists(MODEL_PATH):
     gdown.download(MODEL_URL, MODEL_PATH, quiet=False)
 
+# Now you can load the model
+from tensorflow.keras.models import load_model
 model = load_model(MODEL_PATH)
+
 
 # -------------------------------
 # Page config
