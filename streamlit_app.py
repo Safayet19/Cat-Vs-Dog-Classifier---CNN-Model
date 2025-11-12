@@ -100,7 +100,7 @@ hr {
     font-weight: bold;
 }
 [data-testid="stFileUploader"] span {
-    color: #FFFFFF !important;
+    color: #6c6d70 !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -120,7 +120,7 @@ uploaded_files = st.file_uploader(
 )
 
 if uploaded_files:
-    st.write(f"✅ Uploaded {len(uploaded_files)} image(s)")
+    st.write(f"Uploaded {len(uploaded_files)} image(s)")
     cols = st.columns(len(uploaded_files))
     for i, uploaded_file in enumerate(uploaded_files):
         img = Image.open(uploaded_file)
